@@ -1,0 +1,269 @@
+﻿@model FineBlog.ViewModels.HomeVM
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Web.Common
+
+@{
+    ViewData["Title"] = "Home Page";
+    string thumbnailUrl = "";
+    if(Model.ThumbnailUrl == "")
+    {
+        thumbnailUrl = "/blog/assets/img/home-bg.jpg";
+    }
+    else
+    {
+        thumbnailUrl = "/thumbnails/" + Model.ThumbnailUrl;
+    }
+}
+
+
+
+<!-- Page Header-->
+<header class="masthead" style="background-image: url('@thumbnailUrl');   ">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-6 col-lg-8 text-center">
+
+   
+                    <h2 style="color:white;" >@Model.Title</h2>
+                <h6 style="color:white;">
+                        @Model.ShortDescription
+                    </h6>
+                </div>
+            </div>
+        </div>
+    
+</header>
+
+
+<div class="row justify-content-center">
+
+    <div class="col-lg-6">
+        <!-- section title -->
+        <div class="title text-center">
+            <h2>What Do We Offer</h2>
+            <p style=" 
+    font-family: 'Open Sans';
+    margin-bottom: 2cm;
+    text-align: center;">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.Lorem ipsum dolor sit amet, consectetur
+                adipisicing elit. Voluptates, earum.
+            </p>
+           
+        <!-- /section title -->
+            <div class="border border-dark" style="border: 3px; 
+    font-family: 'Open Sans';
+    margin-bottom: 2cm;
+    text-align: center;"></div>
+    </div>
+</div>
+</div>
+
+
+<style>
+   body{
+        background-color: #e7e7da;
+   }
+
+    
+    
+.card {
+  max-width: 50em;
+  flex-direction: row;
+  background-color: white;
+  border: 0;
+  border-radius:3px;
+  box-shadow: 0 7px 7px rgba(0, 0, 0, 0.20);
+  margin: 3em auto;
+}
+.card.dark {
+  color: #fff;
+}
+.card.card.bg-light-subtle .card-title {
+  color: dimgrey;
+}
+
+.card img {
+  max-width: 35%;
+  margin: auto;
+  padding: 0.2em;
+  border-radius: 0.7em;
+}
+.card-body {
+  display: flex;
+  justify-content: space-between;
+}
+.text-section {
+  max-width: 60%;
+}
+.cta-section {
+  max-width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+.cta-section .btn {
+  padding: 0.3em 0.5em;
+  /* color: #696969; */
+}
+.card.bg-light-subtle .cta-section .btn {
+  background-color: #898989;
+  border-color: #898989;
+}
+
+
+</style>
+
+
+ <div class="container ">
+    
+
+   @foreach (var post in Model.Posts!)
+            {
+                <div class="card bg-light-subtle mt-4">
+                
+                            @if (post.ThumbnailUrl == null)
+                            {
+                            <img class="card-img-top" src="~/thumbnails/default_image.png" style="object-fit:cover; height:100%; width:100%">
+
+                            }
+                            else
+                            {
+                            <img class="card-img-top" src="~/thumbnails/@post.ThumbnailUrl" style="object-fit:cover; height:100%; width:100%">
+                            }
+            <div class="card-body">
+                <div class="text-section">
+                    <h5 class="card-title fw-bold">@post.Title</h5>
+                    <p class="card-text">@post.ShortDescription</p>
+                    <p>
+                        <small class="text-muted">
+                            Posted by
+                            <a href="#!" class="text-primary  text-decoration-none">@post.ApplicationUser!.FirstName @post.ApplicationUser!.LastName</a>
+                            on @post.CreatedDate.ToShortDateString()
+                        </small>
+                    </p>
+                </div>
+                <div class="cta-section">
+                    <div></div>
+                    <button type="button" onclick="window.location.href='@Url.Action("Post", "Blog", new { slug = post.Slug })'" class="btn btn-primary btn-lg">Read more</button>
+                </div>
+            </div>
+        </div>
+    }
+    </div>
+
+
+
+      <!--Card content-->
+    
+
+
+
+
+    
+
+
+       
+  
+
+
+
+            <!-- Pagination -->
+            <div class="d-flex justify-content-start mb-4">
+                @Html.PagedListPager(Model?.Posts, page => Url.Action("Index",
+                new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }),
+                new PagedListRenderOptions()
+                {
+                ContainerDivClasses = new List<string> { "pagination" },
+                LiElementClasses = new List<string> { "page-item" },
+                PageClasses = new List<string> { "page-link" },
+                ActiveLiElementClass = "active",
+                UlElementClasses = new List<string> { "pagination" }
+                })
+            </div>
+
+        
+    
+
+
+
+<section class="call-to-action section" style="
+    padding: 100px 0;
+ background: url('/blog/assets/img/img1.jpg');
+
+
+   
+    background-size: cover;
+    color: #fff;
+}">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-6 col-lg-8 text-center">
+                <h2>Let's Create Something Together</h2>
+                <h6>
+                    Proin gravida nibh vel velit auctor aliquet. Aenean sollicudin bibendum auctor, nisi elit consequat ipsum,
+                    nesagittis sem nid elit. Duis sed odio sitain elit.
+                </h6>
+                
+
+            </div>
+        </div> <!-- End row -->
+    </div> <!-- End container -->
+</section> <!-- End section -->
+
+
+                <section class="team-skills section-sm" id="skills">
+	<div class="container">
+		
+
+		<div class="row justify-content-between">
+			<div class="col-md-5">
+				<div class="team-skills-content">
+					<h2 class="mb-3">Simple To Start</h2>
+					<p>Vestibulum nisl tortor, consectetur quis imperdiet bium, letcu. Sedndime ntumiaculis ex, in
+						faucibus lorem accumsan non. Donec mattis tin unt metuorbi sed tort Igor aman luctus dignissim.
+						Vestibulum nisl tortor, consectetur quis imperdiet bium, letcu. Sedndime ntumiaculis ex, in
+						faucibus lorem accumsan non.</p>
+					
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="progress-block">
+					<ul>
+						<li class="mb-3">
+							<span>Photoshop</span>
+							<div class="progress">
+								<div class="progress-bar" style="width: 90%;">
+								</div>
+							</div>
+						</li>
+						<li class="mb-3">
+							<span>Web Application</span>
+							<div class="progress">
+								<div class="progress-bar" style="width: 85%;">
+								</div>
+							</div>
+						</li>
+						<li class="mb-3">
+							<span>Andriod Application</span>
+							<div class="progress">
+								<div class="progress-bar" style="width: 92%;">
+								</div>
+							</div>
+						</li>
+						<li>
+							<span>IOS Development</span>
+							<div class="progress">
+								<div class="progress-bar" style="width: 78%;">
+								</div>
+							</div>
+						</li>
+					</ul>
+
+				</div>
+			</div>
+		</div> <!-- End row -->
+		
+	</div> <!-- End container -->
+</section> <!-- End section -->
